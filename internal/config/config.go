@@ -51,6 +51,11 @@ type Config struct {
 		Secret   string
 		Duration string
 	}
+	Incrementor struct {
+		MaxValue int32
+		MinValue int32
+		IncrementBy int32
+	}
 }
 
 // NewConfig read config from file or ENV and unmarshal to to Config struct
@@ -67,6 +72,10 @@ func NewConfig() (*Config, error) {
 	err = viper.Unmarshal(&c)
 	if err != nil {
 		return nil, errors.Wrap(err, "Error with viper.Unmarshal")
+	}
+
+	if c.Debug {
+		logrus.SetReportCaller(true)
 	}
 
 	level, err = logrus.ParseLevel(c.Log.Level)

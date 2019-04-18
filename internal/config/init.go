@@ -4,7 +4,6 @@ import (
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 	"os"
-	"strings"
 )
 
 var (
@@ -20,12 +19,6 @@ func Init() {
 
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	logrus.SetOutput(os.Stderr)
-	//logrus.SetReportCaller(true)
-
-	viper.SetEnvPrefix(EnvPrefix)
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-
-	viper.AutomaticEnv()
 
 	viper.SetConfigFile(ConfigFile)
 }
