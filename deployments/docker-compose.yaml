@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+
+  postgresql:
+    container_name: postgresql
+    build:
+      context: ./postgresql
+      dockerfile: Dockerfile
+    image: postgres:latest
+    env_file:
+      - env/postgresql.env
+    expose:
+      - 5432
+
+  incrementor:
+    container_name: incrementor
+    build:
+      context: ../.
+      dockerfile: Dockerfile
+    image: incrementor:latest
+    volumes:
+      - ../config:/app/config
+    env_file:
+      - ./env/incrementor.env
+    links:
+      - postgresql
+
+  migration:
+    image: migration:latest
+    build:
+      context: ../.
+      dockerfile: Dockerfile.migrate
+    command: ["/bin/wait-for-it", "postgresql:5432", "--", "/bin/migrate.sh", "up"]
+    env_file:
+      - ./env/incrementor.env
+    links:
+      - postgresql
+    depends_on:
+      - postgresql

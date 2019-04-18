@@ -1,0 +1,12 @@
+https://github.com/square/certstrap
+Tools to bootstrap CAs, certificate requests, and signed certificates.
+
+TODO:
+* docker-compose
+* Version & Build
+* Unit tests
+* Integration tests
+* Docs
+
+
+Deal within ENV & Config

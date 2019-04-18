@@ -1,0 +1,41 @@
+Log:
+  Level: debug
+  Target: syslog
+  Syslog:
+    Host: localhost
+    Port: 512
+
+SQL:
+  Driver: postgres
+  Username: incrementor
+  Password: incrementor
+  Hostname: localhost
+  Database: incrementor
+  Port: 5432
+  SslMode: disable
+
+Server:
+  Listen:
+    Network: tcp
+    Address: 127.0.0.1:9876
+  TLS:
+    CertFile: config/tls/127.0.0.1.crt
+    KeyFile: config/tls/127.0.0.1.key
+
+Client:
+  Auth:
+    Username: client-1
+    Password: secret-password
+  Dial:
+    Address: 127.0.0.1:9876
+  TLS:
+    CertFile: config/tls/127.0.0.1.crt
+
+Incrementor:
+  MinValue: 0
+  MaxValue: uint64
+  IncrementBy: 1
+
+JWT:
+  Secret: my_secret_key
+  Duration: 1d

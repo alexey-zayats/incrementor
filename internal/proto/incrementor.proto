@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/empty.proto";
+
+service IncrementorService {
+    rpc GetNumber(google.protobuf.Empty) returns (GetNumberResponse) {}
+    rpc IncrementNumber(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+    rpc SetSettings(SetSettingsRequest) returns (google.protobuf.Empty) {}
+    rpc Auth(AuthRequest) returns (AuthResponse) {}
+    rpc Register(RegisterRequest) returns (RegisterResponse) {}
+}
+
+message GetNumberResponse {
+    int32 Number = 1;
+}
+
+message SetSettingsRequest {
+    int32 IncerementSize = 1;
+    int32 MaxValue = 2;
+}
+
+message AuthRequest {
+    string Username = 1;
+    string Password = 2;
+}
+
+message AuthResponse {
+    string Token = 1;
+}
+
+message RegisterRequest {
+    string Username = 1;
+    string Password = 2;
+}
+
+message RegisterResponse {
+    string GUID = 1;
+}
+
+message Empty {}
