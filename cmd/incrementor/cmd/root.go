@@ -89,7 +89,6 @@ func init() {
 		viper.SetDefault(p.ViperBind, p.Value)
 	}
 
-
 	viper.AutomaticEnv()
 
 	rootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", "./config/incrementor.yaml.dist", "Config file")

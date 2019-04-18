@@ -52,8 +52,8 @@ type Config struct {
 		Duration string
 	}
 	Incrementor struct {
-		MaxValue int32
-		MinValue int32
+		MaxValue    int32
+		MinValue    int32
 		IncrementBy int32
 	}
 }
