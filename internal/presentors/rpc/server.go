@@ -6,7 +6,6 @@ import (
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
 	"github.com/pkg/errors"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -17,7 +16,6 @@ import (
 	"incrementor/internal/config"
 	"incrementor/internal/proto"
 	"net"
-	"net/http"
 	"strings"
 	"time"
 )
@@ -61,10 +59,6 @@ func NewServer(config *config.Config,
 
 	proto.RegisterIncrementorServiceServer(s.RPC, incrementor)
 	proto.RegisterHealthServer(s.RPC, healthz)
-
-	grpc_prometheus.Register(s.RPC)
-
-	http.Handle("/metrics", promhttp.Handler())
 
 	return s, nil
 }

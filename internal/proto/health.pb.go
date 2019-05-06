@@ -8,8 +8,6 @@ import (
 	fmt "fmt"
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -190,14 +188,6 @@ func (c *healthClient) Check(ctx context.Context, in *HealthCheckRequest, opts .
 // HealthServer is the server API for Health service.
 type HealthServer interface {
 	Check(context.Context, *HealthCheckRequest) (*HealthCheckResponse, error)
-}
-
-// UnimplementedHealthServer can be embedded to have forward compatible implementations.
-type UnimplementedHealthServer struct {
-}
-
-func (*UnimplementedHealthServer) Check(ctx context.Context, req *HealthCheckRequest) (*HealthCheckResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Check not implemented")
 }
 
 func RegisterHealthServer(s *grpc.Server, srv HealthServer) {

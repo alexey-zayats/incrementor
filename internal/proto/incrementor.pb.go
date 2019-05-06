@@ -9,8 +9,6 @@ import (
 	proto "github.com/golang/protobuf/proto"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	math "math"
 )
 
@@ -433,26 +431,6 @@ type IncrementorServiceServer interface {
 	SetSettings(context.Context, *SetSettingsRequest) (*empty.Empty, error)
 	Auth(context.Context, *AuthRequest) (*AuthResponse, error)
 	Register(context.Context, *RegisterRequest) (*RegisterResponse, error)
-}
-
-// UnimplementedIncrementorServiceServer can be embedded to have forward compatible implementations.
-type UnimplementedIncrementorServiceServer struct {
-}
-
-func (*UnimplementedIncrementorServiceServer) GetNumber(ctx context.Context, req *empty.Empty) (*GetNumberResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetNumber not implemented")
-}
-func (*UnimplementedIncrementorServiceServer) IncrementNumber(ctx context.Context, req *empty.Empty) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IncrementNumber not implemented")
-}
-func (*UnimplementedIncrementorServiceServer) SetSettings(ctx context.Context, req *SetSettingsRequest) (*empty.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetSettings not implemented")
-}
-func (*UnimplementedIncrementorServiceServer) Auth(ctx context.Context, req *AuthRequest) (*AuthResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Auth not implemented")
-}
-func (*UnimplementedIncrementorServiceServer) Register(ctx context.Context, req *RegisterRequest) (*RegisterResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 
 func RegisterIncrementorServiceServer(s *grpc.Server, srv IncrementorServiceServer) {

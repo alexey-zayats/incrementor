@@ -8,7 +8,8 @@ PKGS     = $(or $(PKG),$(shell cd $(BASE) && $(GO) list ./... | grep -v "^$(PACK
 
 PROTOS   = $(wildcard internal/proto/*.proto)
 
-PROTOC  = protoc -I$(GOROOT)/src -I.
+PROTOC  = protoc -I$(GOROOT)/src -I. -I/usr/local/include -I${GOPATH}/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis
+
 GO      = go
 GODOC   = godoc
 GOFMT   = gofmt
@@ -19,7 +20,9 @@ Q = $(if $(filter 1,$V),,@)
 M = $(shell printf "\033[34;1m▶\033[0m")
 
 .PHONY: all
-all: fmt pb lint $(GOROOT)/bin/migrate; $(info $(M) building executable…) @ ## Build program binary
+all: fmt proto lint binary
+
+binary: | ; $(info $(M) building executable…) @ ## Build program binary
 	$Q cd $(BASE) && $(GO) build \
 		-tags release \
 		-ldflags '-X $(PACKAGE)/cmd.Version=$(VERSION) -X $(PACKAGE)/cmd.BuildDate=$(DATE)' \
@@ -41,9 +44,10 @@ lint: | $(GOLINT) ; $(info $(M) running golint…) @ ## Run golint
 		test -z "$$($(GOLINT) $$pkg | tee /dev/stderr)" || ret=1 ; \
 	done ; exit $$ret
 
-.PHONY: pb
-pb: ; $(info $(M) running protoc…) @
+.PHONY: proto
+proto: ; $(info $(M) running protoc…) @
 	@ret=0 && for d in $(PROTOS); do \
+		$(PROTOC) --go_out=plugins=grpc:. ./$$d  || ret=$$? ; \
 		$(PROTOC) --go_out=plugins=grpc:. ./$$d  || ret=$$? ; \
 	done ; exit $$ret
 

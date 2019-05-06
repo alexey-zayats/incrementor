@@ -91,7 +91,7 @@ func init() {
 
 	viper.AutomaticEnv()
 
-	rootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", "./config/incrementor.yaml.dist", "Config file")
+	rootCmd.PersistentFlags().StringVar(&config.ConfigFile, "config", "./config/incrementor.yaml", "Config file")
 
 	cobra.OnInitialize(config.Init)
 }

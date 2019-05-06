@@ -1,4 +1,4 @@
-package db
+package database
 
 import (
 	"database/sql"
@@ -11,8 +11,8 @@ import (
 	"incrementor/internal/config"
 )
 
-// Connect open connection to database
-func Connect(config *config.Config) (*sql.DB, error) {
+// NewConnection open connection to database
+func NewConnection(config *config.Config) (*sql.DB, error) {
 	// postgres://username:password@hostname:port/database?sslmode=disable
 	dsn := fmt.Sprintf("%s://%s:%s@%s:%s/%s?sslmode=%s",
 		config.SQL.Driver,

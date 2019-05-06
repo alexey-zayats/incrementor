@@ -5,9 +5,7 @@ import (
 	"github.com/gravitational/trace"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
-	syshook "github.com/sirupsen/logrus/hooks/syslog"
 	"github.com/spf13/viper"
-	"log/syslog"
 )
 
 // Config struct holds whole application configuration
@@ -52,9 +50,9 @@ type Config struct {
 		Duration string
 	}
 	Incrementor struct {
-		MaxValue    int32
-		MinValue    int32
-		IncrementBy int32
+		MaxValue    int
+		MinValue    int
+		IncrementBy int
 	}
 }
 
@@ -78,6 +76,8 @@ func NewConfig() (*Config, error) {
 		logrus.SetReportCaller(true)
 	}
 
+	fmt.Printf("%v\n", c)
+
 	level, err = logrus.ParseLevel(c.Log.Level)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("Error with logrus.ParseLevel(%s)", c.Log.Level))
@@ -87,10 +87,6 @@ func NewConfig() (*Config, error) {
 
 	if udphook, err := trace.NewUDPHook(); err == nil {
 		logrus.AddHook(udphook)
-	}
-
-	if shook, err := syshook.NewSyslogHook("", "", syslog.LOG_DEBUG, ""); err == nil {
-		logrus.AddHook(shook)
 	}
 
 	return c, nil

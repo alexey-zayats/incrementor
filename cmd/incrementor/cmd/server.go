@@ -6,7 +6,7 @@ import (
 	"go.uber.org/dig"
 	"incrementor/internal/auth"
 	"incrementor/internal/config"
-	"incrementor/internal/db"
+	"incrementor/internal/database"
 	"incrementor/internal/presentors/rpc"
 	"incrementor/internal/repository"
 	"incrementor/internal/services"
@@ -41,7 +41,7 @@ func serverMain(cmd *cobra.Command, args []string) {
 	}
 
 	// Append sql.DB to di
-	if err = container.Provide(db.Connect); err != nil {
+	if err = container.Provide(database.NewConnection); err != nil {
 		logrus.Fatalf("database: %s", err.Error())
 	}
 
@@ -58,6 +58,7 @@ func serverMain(cmd *cobra.Command, args []string) {
 	if err = container.Provide(services.NewClientService); err != nil {
 		logrus.Fatalf("services.Client: %s", err.Error())
 	}
+
 	if err = container.Provide(auth.NewJwt); err != nil {
 		logrus.Fatalf("auth.Jwt: %s", err.Error())
 	}
