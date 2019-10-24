@@ -17,7 +17,7 @@ message GetNumberResponse {
 }
 
 message SetSettingsRequest {
-    int32 IncerementSize = 1;
+    int32 IncrementSize = 1;
     int32 MaxValue = 2;
 }
 

@@ -25,16 +25,3 @@ services:
       - ./env/incrementor.env
     links:
       - postgresql
-
-  migration:
-    image: migration:latest
-    build:
-      context: ../.
-      dockerfile: Dockerfile.migrate
-    command: ["/bin/wait-for-it", "postgresql:5432", "--", "/bin/migrate.sh", "up"]
-    env_file:
-      - ./env/incrementor.env
-    links:
-      - postgresql
-    depends_on:
-      - postgresql

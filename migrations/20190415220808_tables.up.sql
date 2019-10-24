@@ -28,19 +28,18 @@ COMMENT ON COLUMN clients.username IS 'Client username';
 COMMENT ON COLUMN clients.password IS 'Client password';
 
 CREATE TABLE IF NOT EXISTS increments (
-    username varchar not null,
+    client_guid UUID NOT NULL,
     number NUMERIC default 0,
     step NUMERIC default 0,
     maxvalue NUMERIC default 0
 ) INHERITS (obj);
-
 
 COMMENT ON TABLE increments IS 'Table holds records of increments for clients';
 COMMENT ON COLUMN increments.guid IS 'Unique record identifier';
 COMMENT ON COLUMN increments.relname IS 'Table name';
 COMMENT ON COLUMN increments.created IS 'Date/time of record creation';
 COMMENT ON COLUMN increments.updated IS 'Date/time of frecord last modification';
-COMMENT ON COLUMN increments.username IS 'Increment owner username';
+COMMENT ON COLUMN increments.client_guid IS 'Increment owner client_guid';
 COMMENT ON COLUMN increments.number IS 'Current number';
 COMMENT ON COLUMN increments.step IS 'Step for increment';
 COMMENT ON COLUMN increments.maxvalue IS 'Max increment value';

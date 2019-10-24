@@ -14,7 +14,7 @@ const (
 // Increment base struct for incrementor model
 type Increment struct {
 	Obj
-	Username string
+	ClientGUID string
 	// Current incrementor value
 	Number int32
 	// Max value incrementing to

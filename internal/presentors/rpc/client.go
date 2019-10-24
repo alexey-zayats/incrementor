@@ -13,7 +13,7 @@ import (
 	"time"
 )
 
-// IncrementorClient struct holds client information to coll incrementor service
+// IncrementorClient struct holds client information to call incrementor service
 type IncrementorClient struct {
 	Incrementor proto.IncrementorServiceClient
 	Token       string
@@ -76,7 +76,7 @@ func (c *IncrementorClient) auth() {
 
 func (c *IncrementorClient) setSettings(size, max int32) {
 	_, err := c.Incrementor.SetSettings(context.Background(), &proto.SetSettingsRequest{
-		IncerementSize: size,
+		IncrementSize: size,
 		MaxValue:       max,
 	})
 	if err != nil {
