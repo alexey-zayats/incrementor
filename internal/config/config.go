@@ -2,7 +2,6 @@ package config
 
 import (
 	"fmt"
-	"github.com/gravitational/trace"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -76,18 +75,12 @@ func NewConfig() (*Config, error) {
 		logrus.SetReportCaller(true)
 	}
 
-	fmt.Printf("%v\n", c)
-
 	level, err = logrus.ParseLevel(c.Log.Level)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("Error with logrus.ParseLevel(%s)", c.Log.Level))
 	}
 
 	logrus.SetLevel(level)
-
-	if udphook, err := trace.NewUDPHook(); err == nil {
-		logrus.AddHook(udphook)
-	}
 
 	return c, nil
 }

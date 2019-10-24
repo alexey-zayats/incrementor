@@ -1,7 +1,6 @@
 package services
 
 import (
-	"fmt"
 	"github.com/pkg/errors"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -32,7 +31,7 @@ func (s *ClientService) Auth(user, pass string) (*models.Client, error) {
 	}
 
 	if client.Password != pass {
-		return nil, status.Error(codes.Unauthenticated, "Password missmatch")
+		return nil, status.Error(codes.Unauthenticated, "Password mismatch")
 	}
 
 	return client, nil
@@ -43,7 +42,7 @@ func (s *ClientService) Register(username, password string) (*models.Client, err
 
 	client, _ := s.repo.FindByName(username)
 	if client != nil {
-		return nil, errors.New(fmt.Sprintf("Client already exists with username %s", username))
+		return nil, errors.Errorf("client already exists with username %s", username)
 	}
 
 	client = &models.Client{
@@ -54,7 +53,7 @@ func (s *ClientService) Register(username, password string) (*models.Client, err
 
 	client, err := s.repo.Create(client)
 	if err != nil {
-		return nil, errors.Wrap(err, "Error registering client")
+		return nil, errors.Wrap(err, "error on registering client")
 	}
 
 	return client, nil

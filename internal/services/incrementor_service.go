@@ -87,8 +87,8 @@ func (s *IncrementorService) SetSettings(ctx context.Context, r *proto.SetSettin
 		return nil, errors.New("MaxValue must be greater than zero")
 	}
 
-	if r.IncerementSize > 0 {
-		increment.Step = r.IncerementSize
+	if r.IncrementSize > 0 {
+		increment.Step = r.IncrementSize
 	} else {
 		return nil, errors.New("IncerementSize must be greater than zero")
 	}
@@ -127,10 +127,10 @@ func (s *IncrementorService) Register(ctx context.Context, req *proto.RegisterRe
 	}
 
 	inc := &models.Increment{
-		Username: client.Username,
-		Number:   models.MinValue,
-		MaxValue: models.MaxValue,
-		Step:     models.IncremetStep,
+		ClientGUID: client.GUID,
+		Number:     models.MinValue,
+		MaxValue:   models.MaxValue,
+		Step:       models.IncremetStep,
 	}
 	inc.GUID = uuid.NewV4().String()
 
